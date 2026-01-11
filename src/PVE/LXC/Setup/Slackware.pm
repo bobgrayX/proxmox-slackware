@@ -72,7 +72,7 @@ sub update_etc_hosts {
     $self->ct_modify_file($hosts_fn, $section);
 }
 
-sub set_dns_DISABLED {
+sub set_dns {
     my ($self, $conf) = @_;
 
     my ($searchdomains, $nameserver) = $self->lookup_dns_conf($conf);
@@ -87,12 +87,12 @@ sub set_dns_DISABLED {
 	print "DEBUG: set_dns(): nameserver $ns\n";
     }
 
-    print "1)\n$data\n" if $self->ct_file_exists("/etc/resolv.conf");
+    print "/etc/resolv.conf will contains\n$data\n" if $self->ct_file_exists("/etc/resolv.conf");
     $self->ct_modify_file("/etc/resolv.conf", $data, replace => 1);
 
     if ($self->ct_file_exists("/etc/resolv.conf")) {
-	my $resolvconf_content = $self->ct_file_get_contents("/etc/resolv.conf");
-	print "DEBUG: [ $resolvconf_content ]\n";
+	#my $resolvconf_content = $self->ct_file_get_contents("/etc/resolv.conf");
+	#print "DEBUG: [ $resolvconf_content ]\n";
     }
 }
 
